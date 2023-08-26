@@ -1,2 +1,8 @@
-﻿  Map.cpp
+﻿  Components.h
+  GameObject.cpp
+  main.cpp
+  Map.cpp
+  SuperStory.cpp
+  TextureManager.cpp
+  Generating Code...
   SuperStory.vcxproj -> C:\Users\dev\SuperStory\Debug\SuperStory.exe

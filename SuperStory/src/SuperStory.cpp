@@ -7,6 +7,9 @@ Map* map;
 
 SDL_Renderer* SuperStory::renderer = nullptr;
 
+Manager manager;
+auto& newPlayer(manager.addEntity());
+
 SuperStory::SuperStory() {}
 
 SuperStory::~SuperStory() {}
@@ -39,6 +42,8 @@ void SuperStory::init(const char* title, int xpos, int ypos, int width, int heig
 
 	map = new Map();
 
+	newPlayer.addComponent<PositionComponent>();
+
 }
 
 void SuperStory::handleEvents()
@@ -60,6 +65,8 @@ void SuperStory::update()
 {
 	player->Update();
 	enemy->Update();
+	manager.update();
+	std::cout << newPlayer.getComponent<PositionComponent>().x() << "," << newPlayer.getComponent<PositionComponent>().y() << '\n';
 }
 
 void SuperStory::render()
