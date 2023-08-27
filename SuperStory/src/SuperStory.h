@@ -4,8 +4,9 @@
 #include "SDL_image.h"
 
 #include <iostream>
+#include <vector>
 
-
+class ColliderComponent;
 
 class SuperStory {
 public: 
@@ -23,6 +24,7 @@ public:
 
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
+	static std::vector<ColliderComponent*> colliders;
 
 private: 
 	bool isRunning;

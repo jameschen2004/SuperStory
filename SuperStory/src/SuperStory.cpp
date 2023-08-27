@@ -5,17 +5,19 @@
 #include "Vector2D.h"
 #include "Collision.h"
 
-Map* map;
-
 SDL_Renderer* SuperStory::renderer = nullptr;
-
+Map* map;
 Manager manager;
+SDL_Event SuperStory::event;
+
+std::vector<ColliderComponent*> SuperStory::colliders;
 
 auto& player(manager.addEntity());
-
 auto& wall(manager.addEntity());
 
-SDL_Event SuperStory::event;
+auto& tile0(manager.addEntity());
+auto& tile1(manager.addEntity());
+auto& tile2(manager.addEntity());
 
 SuperStory::SuperStory() {}
 
@@ -46,6 +48,12 @@ void SuperStory::init(const char* title, int xpos, int ypos, int width, int heig
 
 	map = new Map();
 
+	tile0.addComponent<TileComponent>(200, 200, 32, 32, 0);
+	tile1.addComponent<TileComponent>(250, 250, 32, 32, 1);
+	tile1.addComponent<ColliderComponent>("dirt");
+	tile2.addComponent<TileComponent>(150, 150, 32, 32, 2);
+	tile2.addComponent<ColliderComponent>("grass");
+
 	player.addComponent<TransformComponent>(5);
 	player.addComponent<SpriteComponent>("assets/ditto.png");
 	player.addComponent<KeyboardController>();
@@ -75,19 +83,15 @@ void SuperStory::update()
 	manager.refresh();
 	manager.update();
 
-	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider))
+	for (auto cc : colliders)
 	{
-		player.getComponent<TransformComponent>().scale = 2;
-		player.getComponent<TransformComponent>().velocity * -1;
-		std::cout << "Wall Hit!\n";
+		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
 	}
 }
 
 void SuperStory::render()
 {
 	SDL_RenderClear(renderer);
-	
-	map->DrawMap();
 
 	manager.draw();
 	SDL_RenderPresent(renderer);

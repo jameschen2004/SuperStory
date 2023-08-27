@@ -26,6 +26,8 @@ public:
 			entity->addComponent<TransformComponent>();
 		}
 		transform = &entity->getComponent<TransformComponent>();
+
+		SuperStory::colliders.push_back(this);
 	}
 
 	void update() override
