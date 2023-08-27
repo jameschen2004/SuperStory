@@ -2,7 +2,6 @@
 
 #include "Components.h"
 #include "../TextureManager.h"
-
 #include "SDL.h"
 
 

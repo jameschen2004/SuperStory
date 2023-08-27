@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "TextureManager.h"
 
 int TrainingGrounds[20][25] = {
 	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1	},

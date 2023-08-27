@@ -3,18 +3,9 @@
 #include "SDL.h"
 #include "SDL_image.h"
 
-#include "TextureManager.h"
-#include "GameObject.h"
-#include "Map.h"
-#include "ECS/ECS.h"
-#include "ECS/Components.h"
-
 #include <iostream>
-#include <vector>
-#include <memory>
-#include <algorithm>
-#include <bitset>
-#include <array>
+
+
 
 class SuperStory {
 public: 

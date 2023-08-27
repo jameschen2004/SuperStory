@@ -11,5 +11,5 @@ SDL_Texture* TextureManager::LoadTexture(const char* texture)
 
 void TextureManager::Draw(SDL_Texture* texture, SDL_Rect src, SDL_Rect dest)
 {
-	SDL_RenderCopy(SuperStory::renderer, texture, &src, &dest);
+	SDL_RenderCopy(SuperStory::renderer, texture, NULL, &dest);
 }

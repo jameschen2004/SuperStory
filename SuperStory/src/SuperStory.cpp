@@ -1,4 +1,7 @@
 #include "SuperStory.h"
+#include "TextureManager.h"
+#include "Map.h"
+#include "ECS/Components.h"
 
 Map* map;
 
