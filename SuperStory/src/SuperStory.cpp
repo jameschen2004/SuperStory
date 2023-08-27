@@ -1,14 +1,11 @@
 #include "SuperStory.h"
 
-GameObject* player;
-GameObject* enemy;
-
 Map* map;
 
 SDL_Renderer* SuperStory::renderer = nullptr;
 
 Manager manager;
-auto& newPlayer(manager.addEntity());
+auto& player(manager.addEntity());
 
 SuperStory::SuperStory() {}
 
@@ -37,12 +34,10 @@ void SuperStory::init(const char* title, int xpos, int ypos, int width, int heig
 
 	}
 
-	player = new GameObject("assets/ditto.png", 0, 0);
-	enemy = new GameObject("assets/mimikyu.png", 50, 50);
-
 	map = new Map();
 
-	newPlayer.addComponent<PositionComponent>();
+	player.addComponent<PositionComponent>();
+	player.addComponent<SpriteComponent>("assets/ditto.png");
 
 }
 
@@ -63,10 +58,8 @@ void SuperStory::handleEvents()
 
 void SuperStory::update()
 {
-	player->Update();
-	enemy->Update();
+	manager.refresh();
 	manager.update();
-	std::cout << newPlayer.getComponent<PositionComponent>().x() << "," << newPlayer.getComponent<PositionComponent>().y() << '\n';
 }
 
 void SuperStory::render()
@@ -75,8 +68,7 @@ void SuperStory::render()
 	
 	map->DrawMap();
 
-	player->Render();
-	enemy->Render();
+	manager.draw();
 	SDL_RenderPresent(renderer);
 }
 void SuperStory::clean()

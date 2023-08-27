@@ -1,8 +1,7 @@
 ﻿  Components.h
-  GameObject.cpp
-  main.cpp
-  Map.cpp
-  SuperStory.cpp
   TextureManager.cpp
+C:\Users\dev\SuperStory\SuperStory\src\ECS\SpriteComponent.h(21,13): error C2653: 'TextureManager': is not a class or namespace name
+C:\Users\dev\SuperStory\SuperStory\src\ECS\SpriteComponent.h(21,29): error C3861: 'LoadTexture': identifier not found
+C:\Users\dev\SuperStory\SuperStory\src\ECS\SpriteComponent.h(46,3): error C2653: 'TextureManager': is not a class or namespace name
+C:\Users\dev\SuperStory\SuperStory\src\ECS\SpriteComponent.h(46,19): error C3861: 'Draw': identifier not found
   Generating Code...
-  SuperStory.vcxproj -> C:\Users\dev\SuperStory\Debug\SuperStory.exe
