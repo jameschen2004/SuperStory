@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "Map.h"
 #include "ECS/Components.h"
+#include "Vector2D.h"
 
 Map* map;
 
@@ -39,7 +40,7 @@ void SuperStory::init(const char* title, int xpos, int ypos, int width, int heig
 
 	map = new Map();
 
-	player.addComponent<PositionComponent>();
+	player.addComponent<TransformComponent>(0.0f,0.0f);
 	player.addComponent<SpriteComponent>("assets/ditto.png");
 
 }
@@ -63,6 +64,13 @@ void SuperStory::update()
 {
 	manager.refresh();
 	manager.update();
+
+	player.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
+
+	if (player.getComponent<TransformComponent>().position.x > 100)
+	{
+		player.getComponent<SpriteComponent>().setTexture("assets/mimikyu.png");
+	}
 }
 
 void SuperStory::render()
