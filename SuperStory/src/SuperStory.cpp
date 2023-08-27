@@ -11,6 +11,8 @@ SDL_Renderer* SuperStory::renderer = nullptr;
 Manager manager;
 auto& player(manager.addEntity());
 
+SDL_Event SuperStory::event;
+
 SuperStory::SuperStory() {}
 
 SuperStory::~SuperStory() {}
@@ -42,12 +44,12 @@ void SuperStory::init(const char* title, int xpos, int ypos, int width, int heig
 
 	player.addComponent<TransformComponent>(0.0f,0.0f);
 	player.addComponent<SpriteComponent>("assets/ditto.png");
+	player.addComponent<KeyboardController>();
 
 }
 
 void SuperStory::handleEvents()
 {
-	SDL_Event event;
 	SDL_PollEvent(&event);
 	switch (event.type)
 	{
@@ -65,12 +67,6 @@ void SuperStory::update()
 	manager.refresh();
 	manager.update();
 
-	player.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
-
-	if (player.getComponent<TransformComponent>().position.x > 100)
-	{
-		player.getComponent<SpriteComponent>().setTexture("assets/mimikyu.png");
-	}
 }
 
 void SuperStory::render()
