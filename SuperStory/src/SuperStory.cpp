@@ -3,13 +3,17 @@
 #include "Map.h"
 #include "ECS/Components.h"
 #include "Vector2D.h"
+#include "Collision.h"
 
 Map* map;
 
 SDL_Renderer* SuperStory::renderer = nullptr;
 
 Manager manager;
+
 auto& player(manager.addEntity());
+
+auto& wall(manager.addEntity());
 
 SDL_Event SuperStory::event;
 
@@ -42,10 +46,14 @@ void SuperStory::init(const char* title, int xpos, int ypos, int width, int heig
 
 	map = new Map();
 
-	player.addComponent<TransformComponent>(0.0f,0.0f);
+	player.addComponent<TransformComponent>(5);
 	player.addComponent<SpriteComponent>("assets/ditto.png");
 	player.addComponent<KeyboardController>();
+	player.addComponent<ColliderComponent>("player");
 
+	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
+	wall.addComponent<SpriteComponent>("assets/grass.png");
+	wall.addComponent<ColliderComponent>("wall");
 }
 
 void SuperStory::handleEvents()
@@ -67,6 +75,10 @@ void SuperStory::update()
 	manager.refresh();
 	manager.update();
 
+	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider))
+	{
+		std::cout << "Wall Hit!\n";
+	}
 }
 
 void SuperStory::render()

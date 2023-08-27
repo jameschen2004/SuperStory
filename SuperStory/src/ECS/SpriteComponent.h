@@ -15,14 +15,19 @@ private:
 public:
 
 	SpriteComponent() = default;
+	
 	SpriteComponent(const char* path)
 	{
 		setTexture(path);
 	}
 
-	void setTexture(const char* path)
+	~SpriteComponent()
 	{
 		SDL_DestroyTexture(texture);
+	}
+
+	void setTexture(const char* path)
+	{
 		texture = TextureManager::LoadTexture(path);
 	}
 
@@ -33,10 +38,8 @@ public:
 
 		srcRect.x = 0;
 		srcRect.y = 0;
-		srcRect.w = 0;
-		srcRect.h = 0;
-		destRect.w = 200;
-		destRect.h = 200;
+		srcRect.w = transform->width;
+		srcRect.h = transform->height;
 
 	}
 
@@ -44,6 +47,8 @@ public:
 	{
 		destRect.x = (int)transform->position.x;
 		destRect.y = (int)transform->position.y;
+		destRect.w = transform->width * transform->scale;
+		destRect.h = transform->height * transform->scale;
 	}
 
 	void draw() override
