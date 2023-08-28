@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	int frameTime;
 
 	superstory = new SuperStory();
-	superstory->init("Super Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+	superstory->init("Super Engine", 800, 640, false);
 
 	while (superstory->running())
 	{

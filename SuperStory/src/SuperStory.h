@@ -13,15 +13,16 @@ public:
 	SuperStory();
 	~SuperStory();
 
-	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+	void init(const char* title, int width, int height, bool fullscreen);
 
 	void handleEvents();
 	void update();
 	void render();
 	void clean();
 
-	bool running();
+	bool running() { return isRunning; }
 
+	static void AddTile(int id, int x, int y);
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static std::vector<ColliderComponent*> colliders;

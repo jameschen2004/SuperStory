@@ -1,75 +1,32 @@
 #include "Map.h"
-#include "TextureManager.h"
-#include "Maps/Training_Grounds.h"
+#include "SuperStory.h"
+#include <fstream>
 
 Map::Map()
 {
-	dirt = TextureManager::LoadTexture("assets/dirt.png");
-	grass = TextureManager::LoadTexture("assets/grass.png");
-	water = TextureManager::LoadTexture("assets/water.png");
-	sky = TextureManager::LoadTexture("assets/sky.png");
-
-	LoadMap(TrainingGrounds);
-
-	src.x = 0;
-	src.y = 0;
-	src.w = 32;
-	src.h = 32;
-	dest.w = 32;
-	dest.h = 32;
-
-	dest.x = 0;
-	dest.y = 0;
 }
 
 Map::~Map()
 {
-	SDL_DestroyTexture(grass);
-	SDL_DestroyTexture(water);
-	SDL_DestroyTexture(dirt);
-	SDL_DestroyTexture(sky);
+
 }
 
-void Map::LoadMap(int arr[20][25])
+void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
-	for (int row = 0; row < 20; row++) {
-		for (int col = 0; col < 25; col++)
+	char tile;
+	std::fstream mapFile;
+	mapFile.open(path);
+
+	for (int y = 0; y < sizeY; y++)
+	{
+		for (int x = 0; x < sizeX; x++)
 		{
-			map[row][col] = arr[row][col];
-		}
-	}
-}
-
-void Map::DrawMap()
-{
-	int type = 0;
-
-	for (int row = 0; row < 20; row++) {
-		for (int col = 0; col < 25; col++)
-		{
-			type = map[row][col];
-
-			dest.x = col * 32;
-			dest.y = row * 32;
-
-			switch (type)
-			{
-			case 0:
-				TextureManager::Draw(grass, src, dest);
-				break;
-			case 1:
-				TextureManager::Draw(sky, src, dest);
-				break;
-			case 2:
-				TextureManager::Draw(water, src, dest);
-				break;
-			case 3:
-				TextureManager::Draw(dirt, src, dest);
-				break;
-			default:
-				break;
-			}
+			mapFile.get(tile);
+			SuperStory::AddTile(atoi(&tile), x * 32, y * 32);
+			mapFile.ignore();
 		}
 	}
 
+	mapFile.close();
 }
+
