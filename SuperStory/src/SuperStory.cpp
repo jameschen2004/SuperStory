@@ -17,6 +17,8 @@ std::vector<ColliderComponent*> SuperStory::colliders;
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
 
+const char* mapfile = "assets/test.png";
+
 enum groupLabels : std::size_t
 {
 	groupMaps,
@@ -53,18 +55,14 @@ void SuperStory::init(const char* title, int width, int height, bool fullscreen)
 
 	map = new Map();
 
-	Map::LoadMap("assets/Training_Grounds.map", 16, 16);
+	Map::LoadMap("assets/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(5);
-	player.addComponent<SpriteComponent>("assets/ditto.png");
+	player.addComponent<TransformComponent>(2);
+	player.addComponent<SpriteComponent>("assets/ditto_animated.png", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
 
-	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
-	wall.addComponent<SpriteComponent>("assets/grass.png");
-	wall.addComponent<ColliderComponent>("wall");
-	wall.addGroup(groupColliders);
 }
 
 void SuperStory::handleEvents()
@@ -121,9 +119,9 @@ void SuperStory::clean()
 	SDL_Quit();
 }
 
-void SuperStory::AddTile(int id, int x, int y)
+void SuperStory::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
 	auto& tile(manager.addEntity());
-	tile.addComponent<TileComponent>(x, y, 32, 32, id);
+	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, mapfile);
 	tile.addGroup(groupMaps);
 }

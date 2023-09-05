@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SuperStory.h"
+#include <string>
 
 class Map
 {

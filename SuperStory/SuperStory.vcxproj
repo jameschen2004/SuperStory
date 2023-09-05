@@ -145,7 +145,6 @@
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\ECS\Components.h" />
     <ClCompile Include="src\ECS\ECS.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\SuperStory.cpp" />
@@ -155,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="src\Components.h" />
     <ClInclude Include="src\ECS.h" />
+    <ClInclude Include="src\ECS\Animation.h" />
     <ClInclude Include="src\ECS\ColliderComponent.h" />
     <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\ECS\ECS.h" />
@@ -162,7 +162,6 @@
     <ClInclude Include="src\ECS\TileComponent.h" />
     <ClInclude Include="src\ECS\TransformComponent.h" />
     <ClInclude Include="src\ECS\SpriteComponent.h" />
-    <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="assets\Training_Grounds.map" />
     <ClInclude Include="src\PositionComponent.h" />
@@ -170,6 +169,9 @@
     <ClInclude Include="src\SuperStory.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\map.map" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

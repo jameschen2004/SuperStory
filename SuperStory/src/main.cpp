@@ -12,17 +12,17 @@ int main(int argc, char *argv[])
 	int frameTime;
 
 	superstory = new SuperStory();
-	superstory->init("Super Engine", 800, 640, false);
+	superstory->init("SuperStory", 800, 640, false);
 
 	while (superstory->running())
 	{
-		frameStart = SDL_GetTicks();
+		frameStart = SDL_GetTicks64();
 
 		superstory->handleEvents();
 		superstory->update();
 		superstory->render();
 
-		frameTime = SDL_GetTicks() - frameStart;
+		frameTime = SDL_GetTicks64() - frameStart;
 
 		if (frameDelay > frameTime)
 		{
