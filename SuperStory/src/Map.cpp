@@ -7,7 +7,7 @@
 
 extern Manager manager;
 
-Map::Map(const char* file, int sc, int ts) : mapFilePath(file), mapScale(sc), tileSize(ts)
+Map::Map(std::string tID, int sc, int ts) : texID(tID), mapScale(sc), tileSize(ts)
 {
 	scaledSize = sc * ts;
 }
@@ -61,6 +61,6 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
 	auto& tile(manager.addEntity());
-	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, mapFilePath);
+	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
 	tile.addGroup(SuperStory::groupMaps);
 }

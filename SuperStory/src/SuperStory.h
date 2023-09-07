@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 
+class AssetManager;
 class ColliderComponent;
 
 class SuperStory {
@@ -27,12 +28,14 @@ public:
 	static SDL_Rect camera;
 
 	static bool isRunning;
+	static AssetManager* assets;
 
 	enum groupLabels : std::size_t
 	{
 		groupMaps,
 		groupPlayers,
-		groupColliders
+		groupColliders,
+		groupProjectiles
 	};
 
 private: 

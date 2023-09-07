@@ -1,12 +1,13 @@
 #pragma once
 
+#include "SDL.h"
+
 #include <map>
 
 #include "Components.h"
-#include "../TextureManager.h"
-#include "SDL.h"
 #include "Animation.h"
-
+#include "../TextureManager.h"
+#include "../AssetManager.h"
 
 class SpriteComponent : public Component
 {
@@ -28,33 +29,34 @@ public:
 
 	SpriteComponent() = default;
 
+	SpriteComponent(std::string id)
+	{
+		setTexture(id);
+	}
+
 	// Modify the constructor to accept animation information
-	SpriteComponent(const char* path, bool isAnimated = false)
+	SpriteComponent(std::string id, bool isAnimated)
 	{
 		animated = isAnimated;
 
-		if (animated)
-		{
-			Animation idle = Animation(0, 24, 100);
-			Animation walk = Animation(1, 24, 100);
+		Animation idle = Animation(0, 24, 100);
+		Animation walk = Animation(1, 24, 100);
 
-			animations.emplace("Idle", idle);
-			animations.emplace("Walk", walk);
+		animations.emplace("Idle", idle);
+		animations.emplace("Walk", walk);
 
-			Play("Idle");
-		}
+		Play("Idle");
 
-		setTexture(path);
+		setTexture(id);
 	}
 
 	~SpriteComponent()
 	{
-		SDL_DestroyTexture(texture);
 	}
 
-	void setTexture(const char* path)
+	void setTexture(std::string id)
 	{
-		texture = TextureManager::LoadTexture(path);
+		texture = SuperStory::assets->GetTexture(id);
 	}
 
 	void init() override
@@ -122,19 +124,13 @@ public:
 
 	void draw() override
 	{
-		if (animated)
-		{
-			TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
-		}
+		TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
 	}
 
 	void Play(const char* animationName)
 	{
-		if (animated)
-		{
-			frames = animations[animationName].frames;
-			animationIndex = animations[animationName].index;
-			speed = animations[animationName].speed;
-		}
+		frames = animations[animationName].frames;
+		animationIndex = animations[animationName].index;
+		speed = animations[animationName].speed;
 	}
 };

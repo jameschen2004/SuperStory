@@ -4,7 +4,7 @@
 #include "ECS/Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
-
+#include "AssetManager.h"
 
 Map* map;
 Manager manager;
@@ -13,6 +13,8 @@ SDL_Renderer* SuperStory::renderer = nullptr;
 SDL_Event SuperStory::event;
 
 SDL_Rect SuperStory::camera = {0, 0, 800, 640};
+
+AssetManager* SuperStory::assets = new AssetManager(&manager);
 
 bool SuperStory::isRunning = false;
 
@@ -45,21 +47,30 @@ void SuperStory::init(const char* title, int width, int height, bool fullscreen)
 
 	}
 
-	map = new Map("assets/terrain_ss.png", 3, 32);
+	assets->AddTexture("terrain", "assets/terrain_ss.png");
+	assets->AddTexture("player", "assets/ditto_animated.png");
+	assets->AddTexture("projectile", "assets/projectile.png");
+
+	map = new Map("terrain", 3, 32);
 
 	map->LoadMap("assets/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(600, 600, 32, 32, 2);
-	player.addComponent<SpriteComponent>("assets/ditto_animated.png", true);
+	player.addComponent<TransformComponent>(700.0f, 500.0f, 32, 32, 2);
+	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
 
+	assets->CreateProjectile(Vector2D(500, 500), Vector2D(2,0), 200, 2, "projectile");
+	assets->CreateProjectile(Vector2D(600, 500), Vector2D(2, -1), 200, 2, "projectile");
+	assets->CreateProjectile(Vector2D(700, 500), Vector2D(2, 2), 200, 2, "projectile");
+	assets->CreateProjectile(Vector2D(400, 500), Vector2D(2, 0), 200, 2, "projectile");
 }
 
 auto& tiles(manager.getGroup(SuperStory::groupMaps));
 auto& players(manager.getGroup(SuperStory::groupPlayers));
 auto& colliders(manager.getGroup(SuperStory::groupColliders));
+auto& projectiles(manager.getGroup(SuperStory::groupProjectiles)); 
 
 void SuperStory::handleEvents()
 {
@@ -93,6 +104,15 @@ void SuperStory::update()
 		}
 	}
 
+	for (auto& p : projectiles)
+	{
+		if (Collision::AABB(player.getComponent<ColliderComponent>().collider, p->getComponent<ColliderComponent>().collider))
+		{
+			std::cout << "Hit player" << std::endl;
+			p->destroy();
+		}
+	}
+
 	camera.x = player.getComponent<TransformComponent>().position.x - 400;
 	camera.y = player.getComponent<TransformComponent>().position.y - 320;
 
@@ -119,6 +139,7 @@ void SuperStory::update()
 void SuperStory::render()
 {
 	SDL_RenderClear(renderer);
+
 	for (auto& t : tiles)
 	{
 		t->draw();
@@ -128,6 +149,10 @@ void SuperStory::render()
 		c->draw();
 	}
 	for (auto& p : players)
+	{
+		p->draw();
+	}
+	for (auto& p : projectiles)
 	{
 		p->draw();
 	}
