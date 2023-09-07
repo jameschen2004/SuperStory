@@ -71,17 +71,54 @@ public:
 	{
 		if (animated)
 		{
-			Uint64 ticks = SDL_GetTicks64();
-			srcRect.x = (ticks / speed) % frames * transform->width;
+			srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
 		}
 
 		srcRect.y = animationIndex * transform->height;
 
-		destRect.x = static_cast<int>(transform->position.x);
-		destRect.y = static_cast<int>(transform->position.y);
+		// Store the previous position for collision response
+		Vector2D prevPosition = transform->position;
+
+		// Update the destination rectangle as before
+		destRect.x = static_cast<int>(transform->position.x) - SuperStory::camera.x;
+		destRect.y = static_cast<int>(transform->position.y) - SuperStory::camera.y;
 		destRect.w = transform->width * transform->scale;
 		destRect.h = transform->height * transform->scale;
+
+		// Determine screen boundaries based on camera dimensions
+		int screenWidth = SuperStory::camera.w;
+		int screenHeight = SuperStory::camera.h;
+
+		// Calculate the boundaries for player movement
+		int minX = 0;
+		int minY = 0;
+		int maxX = screenWidth - destRect.w;
+		int maxY = screenHeight - destRect.h;
+
+		// Check if the player's position exceeds the boundaries
+		if (destRect.x < minX)
+		{
+			destRect.x = minX;
+			transform->position.x = SuperStory::camera.x + destRect.x;
+		}
+		else if (destRect.x > maxX)
+		{
+			destRect.x = maxX;
+			transform->position.x = SuperStory::camera.x + destRect.x;
+		}
+
+		if (destRect.y < minY)
+		{
+			destRect.y = minY;
+			transform->position.y = SuperStory::camera.y + destRect.y;
+		}
+		else if (destRect.y > maxY)
+		{
+			destRect.y = maxY;
+			transform->position.y = SuperStory::camera.y + destRect.y;
+		}
 	}
+
 
 	void draw() override
 	{

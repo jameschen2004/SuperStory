@@ -16,13 +16,13 @@ int main(int argc, char *argv[])
 
 	while (superstory->running())
 	{
-		frameStart = SDL_GetTicks64();
+		frameStart = SDL_GetTicks();
 
 		superstory->handleEvents();
 		superstory->update();
 		superstory->render();
 
-		frameTime = SDL_GetTicks64() - frameStart;
+		frameTime = SDL_GetTicks() - frameStart;
 
 		if (frameDelay > frameTime)
 		{

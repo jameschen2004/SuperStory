@@ -22,13 +22,21 @@ public:
 
 	bool running() { return isRunning; }
 
-	static void AddTile(int srcX, int srcY, int xpos, int ypos);
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
-	static std::vector<ColliderComponent*> colliders;
+	static SDL_Rect camera;
+
+	static bool isRunning;
+
+	enum groupLabels : std::size_t
+	{
+		groupMaps,
+		groupPlayers,
+		groupColliders
+	};
 
 private: 
-	bool isRunning = false;
+
 	SDL_Window* window;
 	int cnt = 0;
 };
