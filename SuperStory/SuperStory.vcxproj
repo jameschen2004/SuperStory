@@ -166,7 +166,7 @@
     <ClInclude Include="src\ECS\TransformComponent.h" />
     <ClInclude Include="src\ECS\SpriteComponent.h" />
     <ClInclude Include="src\Map.h" />
-    <ClInclude Include="assets\Training_Grounds.map" />
+    <ClInclude Include="assets\training_grounds.map" />
     <ClInclude Include="src\PositionComponent.h" />
     <ClInclude Include="src\SpriteComponent.h" />
     <ClInclude Include="src\SuperStory.h" />

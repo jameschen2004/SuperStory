@@ -33,6 +33,9 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 			srcY = atoi(&c) * tileSize;
 			mapFile.get(c);
 			srcX = atoi(&c) * tileSize;
+
+			std::cout << "Read: (" << srcX << ", " << srcY << ") from file." << std::endl;
+
 			AddTile(srcX, srcY, x * scaledSize, y * scaledSize);
 			mapFile.ignore();
 		}

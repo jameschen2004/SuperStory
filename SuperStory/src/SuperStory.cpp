@@ -47,13 +47,13 @@ void SuperStory::init(const char* title, int width, int height, bool fullscreen)
 
 	}
 
-	assets->AddTexture("terrain", "assets/terrain_ss.png");
+	assets->AddTexture("terrain", "assets/tileset.png");
 	assets->AddTexture("player", "assets/ditto_animated.png");
 	assets->AddTexture("projectile", "assets/projectile.png");
 
-	map = new Map("terrain", 3, 32);
+	map = new Map("terrain", 2, 32);
 
-	map->LoadMap("assets/map.map", 25, 20);
+	map->LoadMap("assets/training_grounds.map", 25, 20);
 
 	player.addComponent<TransformComponent>(700.0f, 500.0f, 32, 32, 2);
 	player.addComponent<SpriteComponent>("player", true);

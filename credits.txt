@@ -1,0 +1,7 @@
+ECS Architecture Implementation Credit: https://github.com/carlbirch/BirchEngine
+
+List of assets borrowed
+
+ditto_animated: https://pokemondb.net/
+mimikyu: https://ultimateanna.tumblr.com/
+tilemap: https://opengameart.org/content/platform-tileset-nature
