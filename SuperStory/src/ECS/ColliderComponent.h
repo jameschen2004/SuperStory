@@ -38,9 +38,17 @@ public:
 		{
 			entity->addComponent<TransformComponent>();
 		}
+		
 		transform = &entity->getComponent<TransformComponent>();
 
-		tex = TextureManager::LoadTexture("assets/ditto_box.png");
+		if (tag == "box")
+		{
+			tex = TextureManager::LoadTexture("assets/ditto_box.png");
+		}
+		else
+		{
+			tex = NULL;
+		}
 		srcR = { 0, 0, 32, 32 };
 		destR = { collider.x, collider.y, collider.w, collider.h };
 
@@ -48,7 +56,7 @@ public:
 
 	void update() override
 	{
-		if (tag != "terrain")
+		if (tag != "map_terrain" && tag != "box")
 		{
 			collider.x = static_cast<int>(transform->position.x);
 			collider.y = static_cast<int>(transform->position.y);

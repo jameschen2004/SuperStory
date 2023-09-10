@@ -12,10 +12,7 @@ Map::Map(std::string tID, int sc, int ts) : texID(tID), mapScale(sc), tileSize(t
 	scaledSize = sc * ts;
 }
 
-Map::~Map()
-{
-
-}
+Map::~Map() {}
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
@@ -33,9 +30,6 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 			srcY = atoi(&c) * tileSize;
 			mapFile.get(c);
 			srcX = atoi(&c) * tileSize;
-
-			std::cout << "Read: (" << srcX << ", " << srcY << ") from file." << std::endl;
-
 			AddTile(srcX, srcY, x * scaledSize, y * scaledSize);
 			mapFile.ignore();
 		}
@@ -51,7 +45,13 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 			if (c == '1')
 			{
 				auto& tcol(manager.addEntity());
-				tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
+				tcol.addComponent<ColliderComponent>("box", x * scaledSize, y * scaledSize, scaledSize);
+				tcol.addGroup(SuperStory::groupColliders);
+			}
+			if (c == '2')
+			{
+				auto& tcol(manager.addEntity());
+				tcol.addComponent<ColliderComponent>("map_terrain", x * scaledSize, y * scaledSize, scaledSize);
 				tcol.addGroup(SuperStory::groupColliders);
 			}
 			mapFile.ignore();
