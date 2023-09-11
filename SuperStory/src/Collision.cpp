@@ -17,11 +17,40 @@ bool Collision::AABB(const ColliderComponent& colA, const ColliderComponent& col
 {
 	if (AABB(colA.collider, colB.collider))
 	{
-		//std::cout << colA.tag << " hit: " << colB.tag << '\n';
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+bool Collision::AABB_Y(const SDL_Rect& recA, const SDL_Rect& recB)
+{
+	if (recA.y + recA.h >= recB.y && recB.y + recB.h >= recA.y)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Collision::AABB_Y(const ColliderComponent& colA, const ColliderComponent& colB)
+{
+	return AABB_Y(colA.collider, colB.collider);
+}
+
+bool Collision::AABB_X(const SDL_Rect& recA, const SDL_Rect& recB)
+{
+	if (recA.x + recA.h >= recB.x && recB.x + recB.h >= recA.x)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Collision::AABB_X(const ColliderComponent& colA, const ColliderComponent& colB)
+{
+	return AABB_X(colA.collider, colB.collider);
 }

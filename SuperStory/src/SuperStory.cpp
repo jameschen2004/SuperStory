@@ -91,6 +91,7 @@ void SuperStory::update()
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
+	Vector2D playerVel = player.getComponent<TransformComponent>().velocity;
 
 	manager.refresh();
 	manager.update();
@@ -100,7 +101,15 @@ void SuperStory::update()
 		SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
 		if (Collision::AABB(cCol, playerCol))
 		{
-			player.getComponent<TransformComponent>().position = playerPos;
+			// Vertical collision (e.g., with the floor)
+			// Set the sprite's Y position to align with the floor
+			player.getComponent<TransformComponent>().position.y = cCol.y - playerCol.h;
+
+			// Stop vertical movement (gravity) gradually
+			if (player.getComponent<TransformComponent>().velocity.y > 0)
+			{
+				player.getComponent<TransformComponent>().velocity.y = 0.0f; // Stop downward movement
+			}
 		}
 	}
 
